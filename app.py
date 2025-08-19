@@ -7,7 +7,10 @@ import folium
 app = Flask(__name__)
 
 # Load and index data once at startup
-with open('/Users/matthewmaloy/projects/python/restaurant_ratings/application/data_source/glasgow_restraunts.json') as f:
+#with open('/Users/matthewmaloy/projects/python/restaurant_ratings/application/data_source/glasgow_restraunts.json') as f:
+#    data = json.load(f)
+
+with open('data_source/glasgow_restraunts.json') as f:
     data = json.load(f)
 
 # Index by lowercase business name
