@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Results</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Search Results for "{{ query }}"</h1>
+  </header>
+
+  <main>
+    {% if results %}
+    <ul>
+      {% for r in results %}
+        <li style="margin-bottom: 1rem;">
+          <strong>{{ r.BusinessName }}</strong><br>
+          <em>{{ r.BusinessType }}</em><br>
+          Rating: <strong>{{ r.RatingValue }}</strong>
+          {% if r.NewRatingPending %}
+            <span style="color: red; font-weight: bold;">(New Rating Pending)</span>
+          {% endif %}<br>
+          Inspected on: {{ r.RatingDate }}<br>
+          {% set address_parts = [r.AddressLine1, r.AddressLine2, r.PostCode] %}
+          {% set full_address = address_parts | select('string') | select | join(', ') %}
+          Address: {{ full_address }}<br>
+          {% if r.google_maps_url %}
+            <a href="{{ r.google_maps_url }}" target="_blank">📍 View on Google Maps</a>
+          {% endif %}<br>
+          <a href="/details/{{ r.FHRSID }}">View Details</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No results found.</p>
+  {% endif %}
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Hygiene Insights</p>
+  </footer>
+</body>
+</html>

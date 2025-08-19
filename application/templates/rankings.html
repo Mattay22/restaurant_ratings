@@ -1,0 +1,41 @@
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Postcode Hygiene Rankings</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<header>
+    <h1>Food Hygiene Dashboard</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/postcode-summary">Postcode Analyser</a>
+      <a href="/postcode-rankings">Postcode Rankings</a>
+    </nav>
+</header>
+<h2>Postcode Hygiene Rankings</h2>
+<table class="table table-bordered table-striped table-hover text-center align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>Postcode</th>
+        <th>Total</th>
+        <th>% Passed</th>
+        <th>% Failed</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rankings %}
+      <tr class="{% if r.percent_passed >= 90 %}table-success{% elif r.percent_failed >= 50 %}table-danger{% endif %}">
+        <td>
+            <a href="https://www.google.com/maps/place/Glasgow+{{ r.postcode | urlencode }}/" target="_blank" rel="noopener noreferrer" class="white-link">
+              {{ r.postcode }}
+            </a>
+          </td>
+        <td>{{ r.total }}</td>
+        <td>{{ r.percent_passed }}%</td>
+        <td>{{ r.percent_failed }}%</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  

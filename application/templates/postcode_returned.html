@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Food Hygiene Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Food Hygiene Dashboard</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/violation-reasons">Reasons for Violations</a>
+      <a href="/postcode-rankings">Postcode Rankings</a>
+    </nav>
+<section id="postcode-summary">
+    <h2>Postcode Analyser</h2>
+    <form method="POST" action="{{ url_for('postcode_summary') }}">
+        <label for="postcode">Enter partial postcode:</label>
+        <input type="text" name="postcode" id="postcode" placeholder="e.g. G22" required>
+        <button type="submit">Search</button>
+</form>
+<h2>Summary for {{ postcode_summary.postcode }}</h2>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Metric</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Total Establishments</td>
+      <td>{{ postcode_summary.total }}</td>
+    </tr>
+    <tr>
+      <td>Pass Rate (%)</td>
+      <td>{{ postcode_summary.percent_passed }}</td>
+    </tr>
+    <tr>
+      <td>Fail Rate (%)</td>
+      <td>{{ postcode_summary.percent_failed }}</td>
+    </tr>
+  </tbody>
+</table>
+  <main>
+    <section id="map">
+      <h2>Interactive Map</h2>
+      <iframe src="{{ url_for('static', filename='postcode_map.html') }}"
+              width="100%" height="600" style="border:none;"></iframe>
+    </section>
+  <footer>
+    <p>&copy; 2025 Hygiene Insights</p>
+  </footer>
+</body>
+</html>
