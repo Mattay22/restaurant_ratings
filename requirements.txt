@@ -1,0 +1,6 @@
+# requirements.txt (for Azure)
+flask==2.3.3
+gunicorn==21.2.0
+requests==2.32.4
+folium==0.20.0
+json==2.0.9
