@@ -7,6 +7,15 @@
 </head>
 <body>
   <header>
+    <h1>Scotland's Food Hygiene Dashboard</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/violation-reasons">Reasons for Violations</a>
+      <a href="#postcode-summary">Postcode Analyser</a>
+      <a href="/postcode-rankings">Postcode Rankings</a>
+    </nav>
+  </header>
+  <header>
     <h1>Search Results for "{{ query }}"</h1>
   </header>
 
@@ -28,7 +37,7 @@
           {% if r.google_maps_url %}
             <a href="{{ r.google_maps_url }}" target="_blank">📍 View on Google Maps</a>
           {% endif %}<br>
-          <a href="/details/{{ r.FHRSID }}">View Details</a>
+
         </li>
       {% endfor %}
     </ul>

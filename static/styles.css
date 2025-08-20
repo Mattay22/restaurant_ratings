@@ -1,7 +1,7 @@
 /* Base styles */
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: #0b1f3a; /* deep navy blue */
     color: #e0e6ed; /* soft light text */
   }
@@ -29,7 +29,7 @@ body {
   
   /* Section titles */
   h2 {
-    color: #ffffff;
+    color: #a9c4ff;
     border-bottom: 2px solid #1f3f6e;
     padding-bottom: 0.3rem;
   }
@@ -133,5 +133,61 @@ body {
   
   .white-link:hover {
     text-decoration: underline; /* optional: adds underline on hover */
+  }
+  
+  .tile-container {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    padding: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .tile {
+    background-color: #033d67;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 400px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .tile:hover {
+    transform: translateY(-5px);
+    background-color: #e2eaf1;
+  }
+  .guide-group ul {
+    list-style-type: none;
+    text-align: center;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  .tile-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+  }
+  
+  .tile {
+    background-color: #033d67;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 220px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .tile:hover {
+    transform: translateY(-5px);
+    background-color: #e2eaf1;
+  }
+
+  .no-results {
+    color: #dc3545;
+    font-weight: bold;
+    margin-top: 1rem;
   }
   

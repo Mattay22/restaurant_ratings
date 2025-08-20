@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Food Hygiene Dashboard</title>
+  <title>Scotland's Food Hygiene Dashboard</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -20,30 +20,34 @@
         <input type="text" name="postcode" id="postcode" placeholder="e.g. G22" required>
         <button type="submit">Search</button>
 </form>
-<h2>Summary for {{ postcode_summary.postcode }}</h2>
+{% if postcode_summary %}
+  <h2>Summary for {{ postcode_summary.postcode }}</h2>
 
-<table class="table table-bordered table-striped">
-  <thead class="table-dark">
-    <tr>
-      <th>Metric</th>
-      <th>Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Total Establishments</td>
-      <td>{{ postcode_summary.total }}</td>
-    </tr>
-    <tr>
-      <td>Pass Rate (%)</td>
-      <td>{{ postcode_summary.percent_passed }}</td>
-    </tr>
-    <tr>
-      <td>Fail Rate (%)</td>
-      <td>{{ postcode_summary.percent_failed }}</td>
-    </tr>
-  </tbody>
-</table>
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Metric</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Total Establishments</td>
+        <td>{{ postcode_summary.total }}</td>
+      </tr>
+      <tr>
+        <td>Pass Rate (%)</td>
+        <td>{{ postcode_summary.percent_passed }}</td>
+      </tr>
+      <tr>
+        <td>Fail Rate (%)</td>
+        <td>{{ postcode_summary.percent_failed }}</td>
+      </tr>
+    </tbody>
+  </table>
+{% else %}
+  <p>No matching postcode found in our database, please check back later.</p>
+{% endif %}
   <main>
     <section id="map">
       <h2>Interactive Map</h2>
