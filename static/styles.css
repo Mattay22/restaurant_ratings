@@ -29,7 +29,7 @@ body {
   
   /* Section titles */
   h2 {
-    color: #a9c4ff;
+    color: #ffffff;
     border-bottom: 2px solid #1f3f6e;
     padding-bottom: 0.3rem;
   }
@@ -190,4 +190,91 @@ body {
     font-weight: bold;
     margin-top: 1rem;
   }
-  
+
+/* Navigation styling */
+nav {
+  margin-top: 10px;
+}
+
+nav a {
+  color: #cce6ff;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Section styling */
+#violations {
+  padding: 30px;
+  max-width: 800px;
+  margin: auto;
+}
+
+#violations h2 {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+
+/* Violation group styling */
+.violation-group {
+  background-color: #1f3f6e;
+  border-left: 5px solid #004080;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.violation-group h3 {
+  margin-top: 0;
+  color: #ffffff;
+}
+
+.violation-group ul {
+  padding-left: 20px;
+}
+
+.violation-group li {
+  margin-bottom: 8px;
+}
+
+
+/* Table container for spacing */
+table {
+  margin: 30px auto;
+  width: 90%;
+  max-width: 1000px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Table header styling */
+thead.table-dark th {
+  background-color: #00264d;
+  color: #fff;
+  font-size: 1.1em;
+  padding: 12px;
+}
+
+/* Table cell styling */
+td, th {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+/* Link styling */
+.white-link {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.white-link:hover {
+  text-decoration: underline;
+  color: #0066cc;
+}
