@@ -6,9 +6,25 @@ headers = {
     "x-api-version": "2"
 }
 
-response = requests.get(url, headers=headers)
+params = {
+    "localAuthorityId": 213,
+    "pageSize": 500,  # Max allowed is 500
+    "pageNumber": 1
+}
 
-output = response.json()
+all_results = []
 
-with open("glasgow_restraunts.json", "w", encoding="utf-8") as f:
-    json.dump(output, f, indent=4)
+while True:
+    response = requests.get(url_base, headers=headers, params=params)
+    data = response.json()
+    establishments = data.get("establishments", [])
+
+    if not establishments:
+        break
+
+    all_results.extend(establishments)
+    params["pageNumber"] += 1
+
+
+with open("data_source/glasgow_restaurants.json", "w", encoding="utf-8") as f:
+    json.dump(all_results, f, indent=4)
