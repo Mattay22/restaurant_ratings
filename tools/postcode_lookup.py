@@ -14,7 +14,7 @@ print(lat)
 
 map = folium.Map(location=[lat, lon], zoom_start=13)
 folium.Marker([lat, lon], popup=postcode).add_to(map)
-with open('/Users/matthewmaloy/projects/python/restaurant_ratings/application/data_source/glasgow_restraunts.json') as f:
+with open('/Users/matthewmaloy/projects/python/restaurant_ratings/application/data_source/glasgow_restaurants.json') as f:
     locations = json.load(f)
 marker_group = folium.FeatureGroup(name="Improvement Required Locations")
 
@@ -24,7 +24,7 @@ icon = folium.CustomIcon(
 )
 
 # Add filtered markers
-for loc in locations["establishments"]:
+for loc in locations:
     if postcode in loc["PostCode"]:
         latitude = loc['geocode']['latitude']
         longitude = loc['geocode']['longitude']

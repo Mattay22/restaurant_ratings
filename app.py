@@ -7,16 +7,16 @@ import folium
 app = Flask(__name__)
 
 # Load and index data once at startup
-#with open('/Users/matthewmaloy/projects/python/restaurant_ratings/application/data_source/glasgow_restraunts.json') as f:
+#with open('/Users/matthewmaloy/projects/python/restaurant_ratings/application/data_source/glasgow_restaurants.json') as f:
 #    data = json.load(f)
 
-with open('data_source/glasgow_restraunts.json') as f:
+with open('data_source/glasgow_restaurants.json') as f:
     data = json.load(f)
 
 # Index by lowercase business name
 name_index = {
     e["BusinessName"].lower(): e
-    for e in data["establishments"]
+    for e in data
     if e.get("BusinessName")
 }
 
@@ -59,7 +59,7 @@ def postcode_summary():
     if len(partial_postcode) > 3:
         partial_postcode = partial_postcode[:3]
 
-    results = [b for b in data["establishments"] if b['PostCode'].startswith(partial_postcode)]
+    results = [b for b in data if b['PostCode'].startswith(partial_postcode)]
 
     total = len(results)
     passed = sum(1 for b in results if b['RatingValue'] == 'Pass')
@@ -98,7 +98,7 @@ def postcode_summary():
     folium.Marker([lat, lon], popup=f"{partial_postcode} region").add_to(map)
 
     # Add business markers
-    for loc in data["establishments"]:
+    for loc in data:
         if partial_postcode in loc["PostCode"]:
             latitude = loc['geocode']['latitude']
             longitude = loc['geocode']['longitude']
@@ -137,7 +137,7 @@ def postcode_rankings():
 
     postcode_groups = defaultdict(list)
 
-    for b in data["establishments"]:
+    for b in data:
         postcode = b['PostCode'][:3].upper()  # Use first 3 chars as partial postcode
         if postcode == "":
             postcode = "Missing Data"
@@ -150,19 +150,23 @@ def postcode_rankings():
         total = len(businesses)
         passed = sum(1 for b in businesses if b['RatingValue'] == 'Pass')
         failed = sum(1 for b in businesses if b['RatingValue'] == 'Improvement Required')
-
+        awaiting_inspection = sum(1 for b in businesses if b['RatingValue'] == 'Awaiting Inspection')
         percent_passed = round((passed / total) * 100, 1) if total else 0
         percent_failed = round((failed / total) * 100, 1) if total else 0
+        percent_awaiting_inspection = round((awaiting_inspection / total) * 100, 1) if total else 0
+
 
         rankings.append({
             'postcode': postcode,
             'total': total,
             'percent_passed': percent_passed,
-            'percent_failed': percent_failed
+            'percent_failed': percent_failed,
+            'percent_awaiting_inspection': percent_awaiting_inspection
         })
 
     # Sort by best hygiene performance
-    rankings.sort(key=lambda x: x['percent_passed'], reverse=True)
+    rankings.sort(key=lambda x: x['postcode'])
+
 
     return render_template("rankings.html", rankings=rankings)
 

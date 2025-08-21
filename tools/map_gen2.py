@@ -8,16 +8,16 @@ m = folium.Map(location=[55.864237, -4.251806], zoom_start=12)
 marker_group = folium.FeatureGroup(name="Improvement Required Locations")
 
 icon = folium.CustomIcon(
-    icon_image='/Users/matthewmaloy/projects/python/restaurant_ratings/application/data_source/res_img.png',
+    icon_image='data_source/res_img.png',
     icon_size=(40, 40)
 )
 
 # Load data
-with open('/Users/matthewmaloy/projects/python/restaurant_ratings/application/data_source/glasgow_restraunts.json') as f:
+with open('data_source/glasgow_restaurants.json') as f:
     locations = json.load(f)
 
 # Add filtered markers
-for loc in locations["establishments"]:
+for loc in locations:
     latitude = loc['geocode']['latitude']
     longitude = loc['geocode']['longitude']
     name = loc['BusinessName']
@@ -53,4 +53,4 @@ marker_group.add_to(m)
 # folium.LayerControl().add_to(m)
 
 # Save map
-m.save("/Users/matthewmaloy/projects/python/restaurant_ratings/application/static/map_with_locations.html")
+m.save("static/map_with_locations.html")
