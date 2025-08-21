@@ -1,0 +1,22 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Daily Dashboard Update
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs at 00:00 UTC daily
+
+jobs:
+  update-dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Run Get Data script
+        run: python tools/get_data.py
+
+      - name: Run Create Map
+        run: python tools/map_gen2.py
+
+
