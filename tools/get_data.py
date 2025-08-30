@@ -14,6 +14,36 @@ authoritys = [
     217, # South Lanarkshire
     208, # East Dunbarton
     206, # West Dunbarton
+    201, # East Ayrshire
+    202, # North Ayrshire
+    203, # South Ayrshire
+    197, # Aberdeen
+    198, # Aberdeenshire
+    199, # Angus
+    221, # Moray
+    205, # Clackmanishire
+    210, # Edinburgh
+    218, # East Lothain
+    220, # Midlothian
+    219, # West Lothain
+    207, # Dumfries
+    204, # Borders
+    224, # East Renfrewshire
+    211, # Falkirk
+    215, # Invercylde
+    209, # Dundee City
+    212, # Fife
+    214, # Highland
+    228, # Islands
+    226, # Shetland
+    222, # Orkney
+    223, # Perth
+    200, # Argyll
+    227 # Stirling
+
+
+
+
 ]
 
 
