@@ -17,9 +17,6 @@
 </head>
 
 <body>
-  <div class="banner">
-    New Regions Available Soon
-  </div>
 
   <header>
     <h1>Food Hygiene Dashboard</h1>
@@ -45,13 +42,14 @@
         <th>% Passed</th>
         <th>% Failed</th>
         <th>% Awaiting Inspection</th>
+        <th>% Exempt</th>
       </tr>
     </thead>
     <tbody>
       {% for r in rankings %}
       <tr class="{% if r.percent_passed >= 90 %}table-success{% elif r.percent_failed >= 50 %}table-danger{% endif %}">
         <td>
-          <a href="https://www.google.com/maps/place/Glasgow+{{ r.postcode | urlencode }}/" target="_blank" rel="noopener noreferrer" class="white-link">
+          <a href="https://www.google.com/maps/place/{{r.LocalAuthorityName | urlencode}}+{{ r.postcode | urlencode }}/" target="_blank" rel="noopener noreferrer" class="white-link">
             {{ r.postcode }}
           </a>
         </td>
@@ -59,6 +57,7 @@
         <td>{{ r.percent_passed }}%</td>
         <td>{{ r.percent_failed }}%</td>
         <td>{{ r.percent_awaiting_inspection }}%</td>
+        <td>{{ r.percent_exempt }}%</td>
       </tr>
       {% endfor %}
     </tbody>

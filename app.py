@@ -53,26 +53,35 @@ def search():
 def postcode_summary():
     partial_postcode = request.form.get('postcode', 'G1').strip().upper()
 
-    ### This will cause issue if there are postcodes with two chars i.e IV12
-    if len(partial_postcode) == 2:
-        partial_postcode = f"{partial_postcode} "
-    if len(partial_postcode) > 3:
+    if partial_postcode[:2].isalpha():
+        partial_postcode = partial_postcode[:4]
+        if len(partial_postcode) == 3:
+            partial_postcode = f"{partial_postcode} "
+    else:
         partial_postcode = partial_postcode[:3]
+        if len(partial_postcode) == 2:
+            partial_postcode = f"{partial_postcode} "
 
     results = [b for b in data if b['PostCode'].startswith(partial_postcode)]
 
     total = len(results)
     passed = sum(1 for b in results if b['RatingValue'] == 'Pass')
     failed = sum(1 for b in results if b['RatingValue'] == 'Improvement Required')
+    awaiting_inspection = sum(1 for b in results if b['RatingValue'] == 'Awaiting Inspection')
+    exempt = sum(1 for b in results if b['RatingValue'] == 'Exempt')
 
     percent_passed = round((passed / total) * 100, 1) if total else 0
     percent_failed = round((failed / total) * 100, 1) if total else 0
+    percent_awaiting_inspection = round((awaiting_inspection / total) * 100, 1) if total else 0
+    percent_exempt = round((exempt / total) * 100, 1) if total else 0
 
     postcode_summary = {
         'postcode': partial_postcode,
         'total': total,
         'percent_passed': percent_passed,
-        'percent_failed': percent_failed
+        'percent_failed': percent_failed,
+        'percent_awaiting_inspection': percent_awaiting_inspection,
+        'percent_exempt': percent_exempt
     }
 
     # Geocode the postcode prefix
@@ -138,9 +147,19 @@ def postcode_rankings():
     postcode_groups = defaultdict(list)
 
     for b in data:
-        postcode = b['PostCode'][:3].upper()  # Use first 3 chars as partial postcode
+        postcode = b['PostCode'][:4].upper()  # Use first 3 chars as partial postcode
         if postcode == "":
             postcode = "Missing Data"
+        if "AB!6" in postcode:
+            continue
+        if postcode[:2].isalpha():
+            postcode = postcode[:4]
+            if len(postcode) == 3:
+                postcode = f"{postcode} "
+        else:
+            postcode = postcode[:3]
+            if len(postcode) == 2:
+                postcode = f"{postcode} "
         postcode_groups[postcode].append(b)
 
     rankings = []
@@ -148,12 +167,19 @@ def postcode_rankings():
     for postcode, businesses in postcode_groups.items():
         
         total = len(businesses)
+
+        LocalAuthorityName = businesses['LocalAuthorityName']
+        LocalAuthorityName = LocalAuthorityName.split(" ")[0]
+
         passed = sum(1 for b in businesses if b['RatingValue'] == 'Pass')
         failed = sum(1 for b in businesses if b['RatingValue'] == 'Improvement Required')
         awaiting_inspection = sum(1 for b in businesses if b['RatingValue'] == 'Awaiting Inspection')
+        exempt = sum(1 for b in businesses if b['RatingValue'] == 'Exempt')
+
         percent_passed = round((passed / total) * 100, 1) if total else 0
         percent_failed = round((failed / total) * 100, 1) if total else 0
         percent_awaiting_inspection = round((awaiting_inspection / total) * 100, 1) if total else 0
+        percent_exempt = round((exempt / total) * 100, 1) if total else 0
 
 
         rankings.append({
@@ -161,7 +187,9 @@ def postcode_rankings():
             'total': total,
             'percent_passed': percent_passed,
             'percent_failed': percent_failed,
-            'percent_awaiting_inspection': percent_awaiting_inspection
+            'percent_awaiting_inspection': percent_awaiting_inspection,
+            'percent_exempt': percent_exempt,
+            'LocalAuthorityName': LocalAuthorityName
         })
 
     # Sort by best hygiene performance

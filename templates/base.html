@@ -8,9 +8,6 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-  <div class="banner">
-    New Regions Available Soon
-  </div>
 
   <header>
     <h1>Scotland's Food Hygiene Dashboard</h1>
@@ -25,17 +22,18 @@
   <main>
     <section id="userinfo">
       <div class="guide-group">
-        <h2>About This Dashboard</h2>
         <ul>
-          <li>Search, validate, and locate restaurants in Glasgow that fail to meet government food hygiene standards.</li>
-          <li>All data is sourced from 
+          <br>
+          <li>Instantly search and pinpoint restaurants across Scotland that fall short of official food hygiene standards.</li>
+          <li>Validate inspection results and explore location-based hygiene insights with postcode-level precision.</li>
+          <li>Data is sourced directly from 
             <a href="https://foodstandards.gov.scot" target="_blank" rel="noopener noreferrer">
               Food Standards Scotland
-            </a> and refreshed nightly.
+            </a> and updated every night to keep results fresh and reliable.
           </li>
         </ul>
       </div>
-    </section>
+    </section>    
   </section id="searc">
       <form action="/search" method="get" class="search-form">
         <label for="search-input">Search by business name:</label>
